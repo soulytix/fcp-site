@@ -81,6 +81,11 @@ section{padding-block:var(--space-12); position:relative}
   background:url("https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/cr=t:0%25,l:8.1%25,w:83.8%25,h:100%25/rs=w:1600,cg:true") center 30%/cover no-repeat;
   transform:scale(1.08);
 }
+.hero-bg video{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity 1.2s ease;
+}
+.hero-bg video.playing{opacity:1}
 .hero-bg::after{
   content:""; background:
     radial-gradient(60% 50% at 50% 8%, rgba(232,180,74,.18), transparent 70%),
@@ -266,7 +271,9 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-bg" aria-hidden="true">
+    <video id="heroVideo" muted loop playsinline preload="none" poster="assets/hero-poster.webp" tabindex="-1"></video>
+  </div>
   <div class="wrap">
     <p class="kicker reveal">Motown · Soul · Blues · Jazz · R&B</p>
     <h1>
@@ -493,6 +500,18 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script>
+// hero background video: load only when motion is allowed and data isn't constrained
+(() => {
+  const v = document.getElementById('heroVideo');
+  if (!v) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (reduced || saveData) return; // poster + CSS image stay as the hero
+  v.src = 'assets/hero-bg.mp4';
+  v.addEventListener('playing', () => v.classList.add('playing'), {once:true});
+  v.play().catch(() => {});
+})();
+
 // nav border on scroll
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
