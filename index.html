@@ -176,8 +176,19 @@ section{padding-block:var(--space-12); position:relative}
 @media(min-width:800px){ .gal{grid-template-columns:repeat(4,1fr)} .gal .tall{grid-row:span 2} }
 .gal figure{
   border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
-  aspect-ratio:1/1; margin:0;
+  aspect-ratio:1/1; margin:0; position:relative;
 }
+/* TEMP review badges — remove before launch */
+.gal{counter-reset:pic}
+.gal figure::after,.about-img::after{
+  counter-increment:pic; content:counter(pic);
+  position:absolute; top:.6rem; left:.6rem; z-index:3;
+  width:2rem; height:2rem; display:grid; place-items:center;
+  background:var(--gold); color:#181302; border-radius:50%;
+  font-family:'Archivo Black',sans-serif; font-size:1rem;
+}
+.about-img{position:relative}
+.about-img::after{content:"A"}
 .gal .tall{aspect-ratio:auto}
 .gal img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease}
 .gal figure:hover img{transform:scale(1.06)}
