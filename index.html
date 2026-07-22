@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fountain City Players — Live Motown, Soul & R&B Party Band</title>
+<meta name="description" content="Fountain City Players is a 10-piece live Motown, soul, blues, jazz and R&B show band. High-energy entertainment for weddings, corporate events and parties. Book through Music Garden Bands.">
+<meta property="og:title" content="Fountain City Players — Live Motown, Soul & R&B Party Band">
+<meta property="og:description" content="A 10-piece high-energy dance & party band. The ultimate soundtrack to your event.">
+<meta property="og:image" content="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/rs=w:1200,h:630,cg:true">
+<meta name="theme-color" content="#0b0a10">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a10;
+  --bg-raised:#141220;
+  --ink:#f5f2ea;
+  --ink-dim:#b9b3a6;
+  --gold:#e8b44a;
+  --gold-deep:#c98f1e;
+  --wine:#7c2d3e;
+  --line:#2a2638;
+  --space-1:.5rem; --space-2:1rem; --space-3:1.5rem; --space-4:2rem;
+  --space-6:3rem; --space-8:4rem; --space-12:6rem;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Poppins',system-ui,sans-serif;
+  font-size:1rem; line-height:1.65;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Archivo Black',sans-serif; line-height:1.1; letter-spacing:.01em}
+img{max-width:100%; display:block}
+a{color:var(--gold); text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--gold); outline-offset:3px; border-radius:4px;
+}
+.wrap{max-width:72rem; margin-inline:auto; padding-inline:clamp(1.25rem,4vw,2.5rem)}
+section{padding-block:var(--space-12); position:relative}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed; inset-inline:0; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.9rem clamp(1.25rem,4vw,2.5rem);
+  background:linear-gradient(rgba(11,10,16,.92),rgba(11,10,16,.75));
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s;
+}
+.nav.scrolled{border-color:var(--line)}
+.nav .logo{font-family:'Archivo Black',sans-serif; font-size:1.05rem; color:var(--ink); letter-spacing:.06em}
+.nav .logo span{color:var(--gold)}
+.nav ul{display:flex; gap:var(--space-3); list-style:none; align-items:center}
+.nav ul a{color:var(--ink-dim); font-size:.9rem; font-weight:500; padding:.5rem .25rem; transition:color .2s}
+.nav ul a:hover{color:var(--ink)}
+.btn{
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--gold); color:#181302 !important;
+  font-weight:600; font-size:.95rem;
+  padding:.8rem 1.6rem; border-radius:999px; border:none; cursor:pointer;
+  transition:transform .2s, background .2s, box-shadow .2s;
+  box-shadow:0 0 0 rgba(232,180,74,0);
+}
+.btn:hover{background:#f2c25e; transform:translateY(-2px); box-shadow:0 8px 28px rgba(232,180,74,.35)}
+.btn:active{transform:scale(.97)}
+.nav .btn{padding:.6rem 1.25rem; font-size:.85rem}
+@media(max-width:760px){ .nav ul{display:none} }
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100dvh; display:grid; place-items:center; text-align:center;
+  padding-top:5rem; overflow:hidden;
+}
+.hero-bg,.hero-bg::after{position:absolute; inset:0}
+.hero-bg{
+  background:url("https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/cr=t:0%25,l:8.1%25,w:83.8%25,h:100%25/rs=w:1600,cg:true") center 30%/cover no-repeat;
+  transform:scale(1.08);
+}
+.hero-bg::after{
+  content:""; background:
+    radial-gradient(60% 50% at 50% 8%, rgba(232,180,74,.18), transparent 70%),
+    linear-gradient(rgba(11,10,16,.55), rgba(11,10,16,.92) 85%, var(--bg));
+}
+.hero .wrap{position:relative; z-index:2}
+.kicker{
+  color:var(--gold); font-weight:600; letter-spacing:.35em; text-transform:uppercase;
+  font-size:.8rem; margin-bottom:var(--space-2);
+}
+.hero h1{
+  font-size:clamp(2.6rem,8vw,5.5rem); text-transform:uppercase;
+  text-shadow:0 4px 40px rgba(0,0,0,.6);
+}
+.hero h1 .line{display:block; overflow:hidden}
+.hero h1 .line>span{display:inline-block}
+.hero p.lede{
+  max-width:38rem; margin:var(--space-3) auto var(--space-4);
+  color:var(--ink-dim); font-size:clamp(1rem,2vw,1.2rem); font-weight:300;
+}
+.hero-ctas{display:flex; gap:var(--space-2); justify-content:center; flex-wrap:wrap}
+.btn-ghost{
+  display:inline-flex; align-items:center; gap:.5rem;
+  color:var(--ink); border:1px solid var(--line);
+  background:rgba(20,18,32,.5); backdrop-filter:blur(6px);
+  font-weight:500; font-size:.95rem; padding:.8rem 1.6rem; border-radius:999px;
+  cursor:pointer; transition:border-color .2s, transform .2s;
+}
+.btn-ghost:hover{border-color:var(--gold); transform:translateY(-2px)}
+.scroll-cue{
+  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+  color:var(--ink-dim); font-size:.75rem; letter-spacing:.25em; text-transform:uppercase;
+  z-index:2; animation:cue 2.4s ease-in-out infinite;
+}
+@keyframes cue{0%,100%{opacity:.4; transform:translate(-50%,0)}50%{opacity:1; transform:translate(-50%,8px)}}
+
+/* ---------- section headers ---------- */
+.sec-head{margin-bottom:var(--space-6)}
+.sec-head .kicker{margin-bottom:var(--space-1)}
+.sec-head h2{font-size:clamp(1.8rem,4.5vw,3rem); text-transform:uppercase}
+.rule{width:64px; height:3px; background:linear-gradient(90deg,var(--gold),transparent); margin-top:var(--space-2); border-radius:2px}
+
+/* ---------- about / stats ---------- */
+.about-grid{display:grid; gap:var(--space-6); grid-template-columns:1fr; align-items:center}
+@media(min-width:900px){ .about-grid{grid-template-columns:1.1fr .9fr} }
+.about-copy p{color:var(--ink-dim); margin-bottom:var(--space-2); font-weight:300; max-width:60ch}
+.about-copy strong{color:var(--ink); font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-2); margin-top:var(--space-4)}
+.stat{
+  background:var(--bg-raised); border:1px solid var(--line); border-radius:var(--radius);
+  padding:var(--space-3) var(--space-2); text-align:center;
+}
+.stat b{font-family:'Archivo Black',sans-serif; font-size:clamp(1.6rem,3vw,2.2rem); color:var(--gold); display:block}
+.stat span{font-size:.8rem; color:var(--ink-dim); letter-spacing:.08em; text-transform:uppercase}
+.about-img{border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); aspect-ratio:4/3}
+.about-img img{width:100%; height:100%; object-fit:cover}
+
+/* ---------- genres ---------- */
+.genres{display:flex; flex-wrap:wrap; gap:var(--space-2)}
+.chip{
+  border:1px solid var(--line); border-radius:999px;
+  padding:.7rem 1.4rem; font-size:.95rem; color:var(--ink-dim);
+  background:var(--bg-raised); transition:border-color .2s,color .2s, transform .2s;
+}
+.chip:hover{border-color:var(--gold); color:var(--ink); transform:translateY(-2px)}
+.chip b{color:var(--gold); font-weight:600}
+
+/* ---------- video wall ---------- */
+.vid-grid{display:grid; gap:var(--space-2); grid-template-columns:1fr}
+@media(min-width:700px){ .vid-grid{grid-template-columns:repeat(2,1fr)} }
+@media(min-width:1024px){ .vid-grid{grid-template-columns:repeat(3,1fr)} .vid-grid .feature{grid-column:span 2; grid-row:span 2} }
+.vid{
+  position:relative; aspect-ratio:16/9; border-radius:var(--radius); overflow:hidden;
+  border:1px solid var(--line); cursor:pointer; background:var(--bg-raised);
+}
+.vid img{width:100%; height:100%; object-fit:cover; transition:transform .4s ease, opacity .3s}
+.vid:hover img{transform:scale(1.05)}
+.vid::after{content:""; position:absolute; inset:0; background:linear-gradient(transparent 55%, rgba(11,10,16,.85)); pointer-events:none}
+.vid .play{
+  position:absolute; inset:0; margin:auto; width:64px; height:64px; z-index:2;
+  border-radius:50%; background:rgba(11,10,16,.65); border:2px solid var(--gold);
+  display:grid; place-items:center; transition:background .2s, transform .2s;
+  pointer-events:none;
+}
+.vid:hover .play{background:var(--gold); transform:scale(1.08)}
+.vid .play svg{width:22px; height:22px; fill:var(--gold); margin-left:3px; transition:fill .2s}
+.vid:hover .play svg{fill:#181302}
+.vid .vlabel{position:absolute; left:1rem; bottom:.8rem; z-index:2; font-size:.85rem; font-weight:500; color:var(--ink); pointer-events:none}
+.vid iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+
+/* ---------- gallery ---------- */
+.gal{display:grid; gap:var(--space-2); grid-template-columns:repeat(2,1fr)}
+@media(min-width:800px){ .gal{grid-template-columns:repeat(4,1fr)} .gal .tall{grid-row:span 2} }
+.gal figure{
+  border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
+  aspect-ratio:1/1; margin:0;
+}
+.gal .tall{aspect-ratio:auto}
+.gal img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease}
+.gal figure:hover img{transform:scale(1.06)}
+.gal-note{margin-top:var(--space-3); color:var(--ink-dim); font-size:.9rem; font-weight:300}
+
+/* ---------- testimonials ---------- */
+.quotes{position:relative; max-width:52rem}
+.quote{display:none}
+.quote.active{display:block}
+.quote blockquote{
+  font-size:clamp(1.15rem,2.5vw,1.55rem); font-weight:300; line-height:1.55;
+  color:var(--ink);
+}
+.quote blockquote::before{content:"\201C"; color:var(--gold); font-family:'Archivo Black',sans-serif; font-size:2.4rem; line-height:0; vertical-align:-.35em; margin-right:.25rem}
+.quote cite{display:block; margin-top:var(--space-3); color:var(--gold); font-style:normal; font-weight:600; font-size:.95rem}
+.q-nav{display:flex; gap:var(--space-1); margin-top:var(--space-4)}
+.q-dot{width:44px; height:44px; display:grid; place-items:center; background:none; border:none; cursor:pointer}
+.q-dot i{width:10px; height:10px; border-radius:50%; background:var(--line); transition:background .2s, transform .2s; display:block}
+.q-dot.active i{background:var(--gold); transform:scale(1.3)}
+
+/* ---------- booking ---------- */
+.book{background:var(--bg-raised); border-block:1px solid var(--line)}
+.book-grid{display:grid; gap:var(--space-6); grid-template-columns:1fr}
+@media(min-width:900px){ .book-grid{grid-template-columns:1fr 1fr} }
+.book-info p{color:var(--ink-dim); font-weight:300; max-width:46ch; margin-bottom:var(--space-3)}
+.contact-line{display:flex; align-items:center; gap:.8rem; margin-bottom:var(--space-2); font-size:1.05rem}
+.contact-line svg{width:20px; height:20px; stroke:var(--gold); flex:none}
+form .field{margin-bottom:var(--space-3)}
+label{display:block; font-size:.85rem; font-weight:500; letter-spacing:.05em; margin-bottom:.4rem; color:var(--ink)}
+label .req{color:var(--gold)}
+input,textarea{
+  width:100%; padding:.85rem 1rem; font:inherit; color:var(--ink);
+  background:var(--bg); border:1px solid var(--line); border-radius:10px;
+  transition:border-color .2s;
+}
+input:focus,textarea:focus{border-color:var(--gold); outline:none}
+.two-col{display:grid; gap:var(--space-2); grid-template-columns:1fr}
+@media(min-width:560px){ .two-col{grid-template-columns:1fr 1fr} }
+.form-note{font-size:.8rem; color:var(--ink-dim); margin-top:var(--space-2)}
+
+/* ---------- footer ---------- */
+footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
+.foot{display:flex; flex-wrap:wrap; gap:var(--space-3); align-items:center; justify-content:space-between}
+.socials{display:flex; gap:var(--space-2)}
+.socials a{
+  width:44px; height:44px; display:grid; place-items:center;
+  border:1px solid var(--line); border-radius:50%; transition:border-color .2s, transform .2s;
+}
+.socials a:hover{border-color:var(--gold); transform:translateY(-2px)}
+.socials svg{width:18px; height:18px; fill:var(--ink-dim); transition:fill .2s}
+.socials a:hover svg{fill:var(--gold)}
+.foot small{color:var(--ink-dim); font-weight:300}
+
+/* reveal defaults (JS adds motion; content visible without it) */
+.reveal{opacity:1}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .scroll-cue{animation:none}
+  *{transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="Main">
+  <a class="logo" href="#top">FOUNTAIN CITY <span>PLAYERS</span></a>
+  <ul>
+    <li><a href="#about">The Band</a></li>
+    <li><a href="#watch">Watch</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#love">Reviews</a></li>
+    <li><a class="btn" href="#book">Book the Band</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="kicker reveal">Motown · Soul · Blues · Jazz · R&B</p>
+    <h1>
+      <span class="line"><span>Fountain City</span></span>
+      <span class="line"><span style="color:var(--gold)">Players</span></span>
+    </h1>
+    <p class="lede reveal">A 10-piece live show band bringing the ultimate soundtrack to your wedding, corporate event, or party — sound, sight, and soul.</p>
+    <div class="hero-ctas reveal">
+      <a class="btn" href="#book">Book the Band</a>
+      <a class="btn-ghost" href="#watch">Watch Us Live</a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">Scroll</div>
+</header>
+
+<main>
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">The Band</p>
+      <h2>A Picturesque Adventure Into Sound</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p><strong>Fountain City Players</strong> is a 10-piece musical adventure into sound, sight, and mind — a high-energy dance and party band playing Motown, Top 40, classic soul, blues, jazz, and R&B.</p>
+        <p>From the first downbeat to the last encore, we don't just play music — we provide the ultimate soundtrack to your event. Full horn section, powerhouse vocals, and a rhythm section that keeps the floor packed all night.</p>
+        <div class="stats">
+          <div class="stat"><b>10</b><span>Musicians</span></div>
+          <div class="stat"><b>6+</b><span>Genres</span></div>
+          <div class="stat"><b>100%</b><span>Party</span></div>
+        </div>
+      </div>
+      <div class="about-img reveal">
+        <img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01204-Original.jpg/:/rs=w:1110,cg:true,m" alt="Fountain City Players performing live on stage" loading="lazy" width="1110" height="833">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section id="watch" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">See the Show</p>
+      <h2>Watch Us Live</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="vid-grid">
+      <button class="vid feature reveal" data-yt="5LqSr6vdVWM" aria-label="Play video: Fountain City Players promo">
+        <img src="https://i.ytimg.com/vi/5LqSr6vdVWM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vlabel">Fountain City Players — Promo</span>
+      </button>
+      <button class="vid reveal" data-yt="8QCX3ZDpDEM" aria-label="Play video: Fountain City Players live 1">
+        <img src="https://i.ytimg.com/vi/8QCX3ZDpDEM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vlabel">Live on Stage</span>
+      </button>
+      <button class="vid reveal" data-yt="N2pUskSS_iI" aria-label="Play video: Fountain City Players live 2">
+        <img src="https://i.ytimg.com/vi/N2pUskSS_iI/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vlabel">Live on Stage</span>
+      </button>
+      <button class="vid reveal" data-yt="ZAujNftT4Ww" aria-label="Play video: Fountain City Players live 3">
+        <img src="https://i.ytimg.com/vi/ZAujNftT4Ww/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vlabel">Live on Stage</span>
+      </button>
+      <button class="vid reveal" data-yt="cZql8ET5ftM" aria-label="Play video: Fountain City Players live 4">
+        <img src="https://i.ytimg.com/vi/cZql8ET5ftM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vlabel">Live on Stage</span>
+      </button>
+      <button class="vid reveal" data-yt="mlTr4LWT0sE" aria-label="Play video: Fountain City Players live 5">
+        <img src="https://i.ytimg.com/vi/mlTr4LWT0sE/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="vlabel">Live on Stage</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC / GENRES -->
+<section id="music" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">The Sound</p>
+      <h2>Something for Every Floor</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="genres reveal">
+      <span class="chip"><b>Motown</b> — The Temptations, Stevie, Marvin</span>
+      <span class="chip"><b>Classic Soul</b> — Aretha, Otis, Al Green</span>
+      <span class="chip"><b>R&B</b> — old school to right now</span>
+      <span class="chip"><b>Top 40 / Pop</b> — the hits everyone knows</span>
+      <span class="chip"><b>Blues</b> — deep pocket, real feel</span>
+      <span class="chip"><b>Jazz</b> — cocktail hour to late night</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">On Stage</p>
+      <h2>Photo Gallery</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="gal">
+      <figure class="tall reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/cr=t:0%25,l:8.1%25,w:83.8%25,h:100%25/rs=w:806,h:403,cg:true" alt="Full band on stage under lights" loading="lazy" width="806" height="403"></figure>
+      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/-4563460734388497990-IMG-4078-Original.jpg/:/rs=w:740,cg:true,m" alt="Band performing live" loading="lazy" width="740" height="740"></figure>
+      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/1314115413605175881-IMG-4075-Original.jpg/:/rs=w:740,cg:true" alt="Vocalists on stage" loading="lazy" width="740" height="740"></figure>
+      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01201-Original.jpg/:/rs=w:740,cg:true,m" alt="Horn section performing" loading="lazy" width="740" height="740"></figure>
+      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01202-Original.jpg/:/rs=w:740,cg:true,m" alt="Band members performing" loading="lazy" width="740" height="740"></figure>
+      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-3145-Original.jpg/:/rs=w:740,cg:true,m" alt="Fountain City Players group shot" loading="lazy" width="740" height="740"></figure>
+      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01204-Original.jpg/:/rs=w:740,cg:true" alt="Stage view of the full band" loading="lazy" width="740" height="740"></figure>
+    </div>
+    <p class="gal-note reveal">Coming soon: fan photos — snap a QR code at the show and add your shots to the wall.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="love" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">The Reviews</p>
+      <h2>Word on the Dance Floor</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="quotes reveal" aria-live="polite">
+      <div class="quote active">
+        <blockquote>The band is the most important part of making a wedding reception fun and memorable, and the Fountain City Players exceeded that and more! Would book them a million times over!</blockquote>
+        <cite>— Margaret, wedding reception</cite>
+      </div>
+      <div class="quote">
+        <blockquote>The Band was fantastic all-around. Easy and professional to work with, and the musicianship was second to none. The Fountain City Players will be my first call the next time I'm hosting an event.</blockquote>
+        <cite>— Wesley D., Birmingham, AL</cite>
+      </div>
+      <div class="quote">
+        <blockquote>They had energy &amp; style in addition to their obvious talents. An awesome set list — a great mix of upbeat to romantic soul as well as newer and dance hits.</blockquote>
+        <cite>— Jonathan A., Little Rock, AR</cite>
+      </div>
+      <div class="quote">
+        <blockquote>So many of our guests talked about THE BAND!!! Every one of the performers were professionals. We really like The Fountain City Players!</blockquote>
+        <cite>— Kathy, mother of the bride</cite>
+      </div>
+      <div class="quote">
+        <blockquote>Everyone commented on how much fun they were and how they really kept the party going. I would definitely hire them again and recommend them. So much fun!</blockquote>
+        <cite>— Pam T., Cairo, GA</cite>
+      </div>
+    </div>
+    <div class="q-nav" role="tablist" aria-label="Testimonials"></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="book" id="book">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Let's Talk</p>
+      <h2>Book the Band</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="book-grid">
+      <div class="book-info reveal">
+        <p>Have a date in mind? Questions about the set list? Reach out and let's make your event one nobody stops talking about. Bookings are handled by our agency, Music Garden Bands.</p>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:18006892263">1-800-689-2263</a>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <a href="mailto:office@musicgarden.net">office@musicgarden.net</a>
+        </div>
+      </div>
+      <form class="reveal" action="mailto:office@musicgarden.net" method="post" enctype="text/plain">
+        <div class="two-col">
+          <div class="field">
+            <label for="f-name">Name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email <span class="req">*</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label for="f-phone">Phone <span class="req">*</span></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="f-date">Event date <span class="req">*</span></label>
+            <input id="f-date" name="event_date" type="date" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-msg">Tell us about your event</label>
+          <textarea id="f-msg" name="message" rows="4" placeholder="Venue, city, type of event…"></textarea>
+        </div>
+        <button class="btn" type="submit">Send Inquiry</button>
+        <p class="form-note">Prefer to talk? Call the agency directly — mention Fountain City Players.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo nav-logo" href="#top" style="font-family:'Archivo Black',sans-serif">FOUNTAIN CITY <span style="color:var(--gold)">PLAYERS</span></a>
+    <div class="socials">
+      <a href="https://www.facebook.com/The-FountainCity-Players-1025408187497439/" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="https://www.instagram.com/musicgardenbands/" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.74 1.69 4.89 4.89.06 1.25.07 1.64.07 4.84s0 3.6-.07 4.85c-.15 3.2-1.64 4.74-4.89 4.89-1.25.06-1.64.07-4.85.07s-3.6 0-4.84-.07c-3.26-.15-4.74-1.7-4.89-4.9-.06-1.24-.07-1.63-.07-4.84s0-3.6.07-4.84C2.42 3.96 3.9 2.42 7.16 2.27 8.4 2.21 8.8 2.2 12 2.2zm0 3.68a6.12 6.12 0 1 0 0 12.24 6.12 6.12 0 0 0 0-12.24zm0 10.09a3.97 3.97 0 1 1 0-7.94 3.97 3.97 0 0 1 0 7.94zm6.36-11.77a1.43 1.43 0 1 0 0 2.86 1.43 1.43 0 0 0 0-2.86z"/></svg></a>
+      <a href="https://www.youtube.com/channel/UCwF5MrBA8B0DsEXLw7i5IOQ" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a>
+    </div>
+    <small>© 2026 Fountain City Players · Booked by <a href="https://musicgarden.net">Music Garden Bands</a></small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+// nav border on scroll
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+// lite YouTube embeds: swap thumbnail for iframe on click
+document.querySelectorAll('.vid').forEach(v => {
+  v.addEventListener('click', () => {
+    const id = v.dataset.yt;
+    const f = document.createElement('iframe');
+    f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    f.title = v.getAttribute('aria-label');
+    f.allow = 'autoplay; encrypted-media; picture-in-picture';
+    f.allowFullscreen = true;
+    v.replaceChildren(f);
+  }, {once:true});
+});
+
+// testimonial rotator
+const quotes = [...document.querySelectorAll('.quote')];
+const qnav = document.querySelector('.q-nav');
+let qi = 0, qtimer;
+quotes.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.className = 'q-dot' + (i === 0 ? ' active' : '');
+  b.setAttribute('aria-label', `Testimonial ${i+1}`);
+  b.innerHTML = '<i></i>';
+  b.addEventListener('click', () => { show(i); restart(); });
+  qnav.appendChild(b);
+});
+const dots = [...qnav.children];
+function show(i){
+  quotes[qi].classList.remove('active'); dots[qi].classList.remove('active');
+  qi = i;
+  quotes[qi].classList.add('active'); dots[qi].classList.add('active');
+}
+function restart(){ clearInterval(qtimer); qtimer = setInterval(() => show((qi+1)%quotes.length), 7000); }
+restart();
+
+// scroll animations (skipped for reduced motion)
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // hero headline lines rise in
+  gsap.from('.hero h1 .line > span', {yPercent:110, duration:.9, ease:'power3.out', stagger:.12, delay:.15});
+  gsap.from('.hero .kicker, .hero .lede, .hero-ctas', {opacity:0, y:24, duration:.8, ease:'power2.out', stagger:.12, delay:.5});
+
+  // subtle hero parallax
+  gsap.to('.hero-bg', {yPercent:12, ease:'none',
+    scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:true}});
+
+  // section reveals
+  document.querySelectorAll('main .reveal, footer .reveal').forEach(el => {
+    gsap.from(el, {opacity:0, y:36, duration:.8, ease:'power2.out',
+      scrollTrigger:{trigger:el, start:'top 85%'}});
+  });
+
+  // stat counters
+  document.querySelectorAll('.stat b').forEach(el => {
+    const raw = el.textContent;
+    const num = parseInt(raw);
+    if (isNaN(num)) return;
+    const suffix = raw.replace(String(num), '');
+    const o = {v:0};
+    gsap.to(o, {v:num, duration:1.2, ease:'power1.out',
+      snap:{v:1},
+      onUpdate:() => el.textContent = o.v + suffix,
+      scrollTrigger:{trigger:el, start:'top 88%'}});
+  });
+}
+</script>
+</body>
+</html>
