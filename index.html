@@ -82,10 +82,14 @@ section{padding-block:var(--space-12); position:relative}
   .nav ul{
     display:flex; flex-direction:column; align-items:center; gap:var(--space-3);
     position:fixed; inset:0; top:0; padding-top:6rem; z-index:-1;
-    background:rgba(11,10,16,.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    background:rgba(11,10,16,.82); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
     opacity:0; pointer-events:none; transition:opacity .25s ease;
   }
   .nav.open ul{opacity:1; pointer-events:auto}
+  /* blur + mute the page itself while the menu is open */
+  body.nav-locked .hero, body.nav-locked main, body.nav-locked footer{
+    filter:blur(10px) brightness(.5); transition:filter .25s ease;
+  }
   .nav ul a{font-size:1.2rem; padding:.5rem 1rem}
   .nav ul .btn{font-size:1.05rem; padding:.9rem 2rem; margin-top:var(--space-2)}
   .nav-toggle{display:grid}
@@ -418,7 +422,7 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
       <h2>Something for Every Floor</h2>
       <div class="rule"></div>
     </div>
-    <div class="genres reveal">
+    <div class="genres">
       <span class="chip"><b>Motown</b> — The Temptations, Stevie, Marvin</span>
       <span class="chip"><b>Classic Soul</b> — Aretha, Otis, Al Green</span>
       <span class="chip"><b>R&B</b> — old school to right now</span>
@@ -743,6 +747,18 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap) {
   document.querySelectorAll('main .reveal, footer .reveal').forEach(el => {
     gsap.from(el, {opacity:0, y:36, duration:.8, ease:'power2.out',
       scrollTrigger:{trigger:el, start:'top 85%'}});
+  });
+
+  // genre chips: staggered pop-in, then a gentle float
+  gsap.from('.genres .chip', {
+    opacity:0, y:26, scale:.85, duration:.55, ease:'back.out(1.6)', stagger:.09,
+    scrollTrigger:{trigger:'.genres', start:'top 85%'},
+    onComplete(){
+      document.querySelectorAll('.genres .chip').forEach((c, i) => {
+        gsap.to(c, {y:-5, duration:1.6 + (i % 3) * .4, ease:'sine.inOut',
+          yoyo:true, repeat:-1, delay:i * .18});
+      });
+    }
   });
 
   // stat counters
