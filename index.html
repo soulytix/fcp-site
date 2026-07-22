@@ -78,7 +78,7 @@ section{padding-block:var(--space-12); position:relative}
   padding-top:5rem; overflow:hidden;
 }
 .hero-bg,.hero-bg::after{position:absolute; inset:0}
-.hero-bg{background:var(--bg); transform:scale(1.08)}
+.hero-bg{background:var(--bg)}
 .hero-bg video{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   opacity:0; transition:opacity 1.2s ease;
@@ -175,6 +175,13 @@ section{padding-block:var(--space-12); position:relative}
 .vid:hover .play svg{fill:#181302}
 .vid .vlabel{position:absolute; left:1rem; bottom:.8rem; z-index:2; font-size:.85rem; font-weight:500; color:var(--ink); pointer-events:none}
 .vid iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+/* scroll-driven video stack (applied by JS when motion is allowed) */
+.vid-grid.stacked{display:block; position:relative; height:min(72vh,42rem)}
+.vid-grid.stacked .vid{
+  position:absolute; inset:0; margin:auto;
+  width:min(100%,56rem); height:auto; aspect-ratio:16/9;
+  opacity:0; visibility:hidden;
+}
 
 /* ---------- gallery ---------- */
 .gal{
@@ -316,33 +323,33 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
       <h2>Watch Us Live</h2>
       <div class="rule"></div>
     </div>
-    <div class="vid-grid">
-      <button class="vid feature reveal" data-yt="5LqSr6vdVWM" aria-label="Play video: Fountain City Players promo">
+    <div class="vid-grid" id="vidStack">
+      <button class="vid feature" data-yt="5LqSr6vdVWM" aria-label="Play video: Fountain City Players promo">
         <img src="https://i.ytimg.com/vi/5LqSr6vdVWM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Fountain City Players — Promo</span>
       </button>
-      <button class="vid reveal" data-yt="8QCX3ZDpDEM" aria-label="Play video: Fountain City Players live 1">
+      <button class="vid" data-yt="8QCX3ZDpDEM" aria-label="Play video: Fountain City Players live 1">
         <img src="https://i.ytimg.com/vi/8QCX3ZDpDEM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Live on Stage</span>
       </button>
-      <button class="vid reveal" data-yt="N2pUskSS_iI" aria-label="Play video: Fountain City Players live 2">
+      <button class="vid" data-yt="N2pUskSS_iI" aria-label="Play video: Fountain City Players live 2">
         <img src="https://i.ytimg.com/vi/N2pUskSS_iI/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Live on Stage</span>
       </button>
-      <button class="vid reveal" data-yt="ZAujNftT4Ww" aria-label="Play video: Fountain City Players live 3">
+      <button class="vid" data-yt="ZAujNftT4Ww" aria-label="Play video: Fountain City Players live 3">
         <img src="https://i.ytimg.com/vi/ZAujNftT4Ww/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Live on Stage</span>
       </button>
-      <button class="vid reveal" data-yt="cZql8ET5ftM" aria-label="Play video: Fountain City Players live 4">
+      <button class="vid" data-yt="cZql8ET5ftM" aria-label="Play video: Fountain City Players live 4">
         <img src="https://i.ytimg.com/vi/cZql8ET5ftM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Live on Stage</span>
       </button>
-      <button class="vid reveal" data-yt="mlTr4LWT0sE" aria-label="Play video: Fountain City Players live 5">
+      <button class="vid" data-yt="mlTr4LWT0sE" aria-label="Play video: Fountain City Players live 5">
         <img src="https://i.ytimg.com/vi/mlTr4LWT0sE/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Live on Stage</span>
@@ -586,13 +593,28 @@ restart();
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // hero logo swells in
-  gsap.from('.hero-logo', {opacity:0, scale:.86, y:20, duration:1.1, ease:'power3.out', delay:.15});
-  gsap.from('.hero .kicker, .hero .lede, .hero-ctas', {opacity:0, y:24, duration:.8, ease:'power2.out', stagger:.12, delay:.5});
+  // hero content: vertical fade-in (video stays static behind)
+  gsap.from(['.hero .kicker', '.hero-logo', '.hero .lede', '.hero-ctas'],
+    {opacity:0, y:48, duration:1, ease:'power3.out', stagger:.14, delay:.2});
+  // and fades upward away as you scroll past
+  gsap.to('.hero .wrap', {opacity:0, y:-60, ease:'none',
+    scrollTrigger:{trigger:'.hero', start:'top top', end:'70% top', scrub:true}});
 
-  // subtle hero parallax
-  gsap.to('.hero-bg', {yPercent:12, ease:'none',
-    scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:true}});
+  // watch us live: scroll-driven vertical fade from one video to the next
+  const stack = document.getElementById('vidStack');
+  if (stack){
+    stack.classList.add('stacked');
+    const vids = gsap.utils.toArray(stack.querySelectorAll('.vid'));
+    gsap.set(vids[0], {autoAlpha:1, y:0});
+    const tl = gsap.timeline({scrollTrigger:{
+      trigger:'#watch', start:'top 64', end:'+=' + (vids.length*70) + '%',
+      scrub:true, pin:true, anticipatePin:1}});
+    vids.forEach((v, i) => {
+      if (i > 0) tl.fromTo(v, {autoAlpha:0, y:70}, {autoAlpha:1, y:0, duration:1, ease:'none'});
+      tl.to(v, {duration:.7});                                   // dwell so it can be watched/clicked
+      if (i < vids.length - 1) tl.to(v, {autoAlpha:0, y:-70, duration:1, ease:'none'});
+    });
+  }
 
   // section reveals
   document.querySelectorAll('main .reveal, footer .reveal').forEach(el => {
