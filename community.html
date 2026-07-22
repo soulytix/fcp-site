@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fan Photos — Fountain City Players</title>
+<meta name="description" content="Community photo wall for Fountain City Players — photos shared by fans and guests at our shows.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a10; --bg-raised:#141220; --ink:#f5f2ea; --ink-dim:#b9b3a6;
+  --gold:#e8b44a; --line:#2a2638;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Poppins',system-ui,sans-serif;
+  overflow:hidden; overscroll-behavior:none;
+}
+a{color:var(--gold); text-decoration:none}
+
+.topbar{
+  position:fixed; inset-inline:0; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.8rem clamp(1rem,4vw,2.5rem);
+  background:linear-gradient(rgba(11,10,16,.9),transparent);
+}
+.topbar img{height:2.5rem; width:auto}
+.topbar .actions{display:flex; gap:.6rem; flex-wrap:wrap; justify-content:flex-end}
+.btn{
+  display:inline-flex; align-items:center; gap:.4rem;
+  background:var(--gold); color:#181302; font-weight:600; font-size:.8rem;
+  padding:.55rem 1.1rem; border-radius:999px; cursor:pointer; border:none;
+}
+.btn-ghost{
+  display:inline-flex; align-items:center;
+  color:var(--ink); border:1px solid var(--line); background:rgba(20,18,32,.6);
+  font-weight:500; font-size:.8rem; padding:.55rem 1.1rem; border-radius:999px;
+}
+.btn-ghost:hover,.btn:hover{filter:brightness(1.1)}
+
+.head{
+  position:fixed; inset-inline:0; top:18%; z-index:5; text-align:center;
+  pointer-events:none; transition:opacity 1s ease;
+}
+.head .kicker{color:var(--gold); font-weight:600; letter-spacing:.3em; text-transform:uppercase; font-size:.75rem}
+.head h1{font-family:'Archivo Black',sans-serif; font-size:clamp(1.8rem,6vw,3.4rem); text-transform:uppercase; text-shadow:0 4px 30px rgba(0,0,0,.7)}
+.head p{color:var(--ink-dim); font-weight:300; font-size:.95rem; margin-top:.5rem}
+.head.faded{opacity:0}
+
+.tunnel{
+  position:fixed; inset:0; perspective:900px; perspective-origin:50% 50%;
+  cursor:grab; touch-action:none;
+}
+.tunnel:active{cursor:grabbing}
+.card{
+  position:absolute; left:50%; top:50%;
+  width:min(46vw,320px); aspect-ratio:4/3;
+  margin-left:calc(min(46vw,320px)/-2); margin-top:calc(min(46vw,320px)*.75/-2);
+  border-radius:12px; overflow:hidden;
+  border:1px solid rgba(232,180,74,.25);
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+  will-change:transform,opacity; backface-visibility:hidden;
+  background:var(--bg-raised);
+}
+.card img{width:100%; height:100%; object-fit:cover; display:block}
+.card .tag{
+  position:absolute; left:.6rem; bottom:.5rem; font-size:.65rem; font-weight:500;
+  color:var(--ink); background:rgba(11,10,16,.7); padding:.2rem .6rem; border-radius:999px;
+}
+
+.state{
+  position:fixed; inset:0; display:grid; place-items:center; text-align:center;
+  padding:2rem; z-index:4;
+}
+.state .inner{max-width:26rem}
+.state h2{font-family:'Archivo Black',sans-serif; margin-bottom:.8rem}
+.state p{color:var(--ink-dim); font-weight:300; margin-bottom:1.2rem}
+
+.hint{
+  position:fixed; bottom:1.4rem; left:50%; transform:translateX(-50%);
+  color:var(--ink-dim); font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  z-index:5; animation:pulse 2.6s ease-in-out infinite; pointer-events:none;
+}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
+
+/* reduced-motion / fallback grid */
+.grid-fallback{
+  position:fixed; inset:0; overflow-y:auto; padding:6rem clamp(1rem,4vw,2.5rem) 3rem;
+  display:none; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.8rem;
+  align-content:start;
+}
+.grid-fallback img{width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; border:1px solid var(--line)}
+@media (prefers-reduced-motion: reduce){
+  .tunnel,.hint{display:none}
+  .grid-fallback{display:grid}
+  .head{position:static; padding-top:5rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="index.html" aria-label="Back to Fountain City Players home"><img src="assets/logo.webp" alt="Fountain City Players"></a>
+  <div class="actions">
+    <a class="btn-ghost" href="index.html">← Main Site</a>
+    <a class="btn" id="uploadBtn" href="https://drive.google.com/drive/folders/1NTmMKQkWCASOpHnfC7cIEHPXGnoIwfx-" target="_blank" rel="noopener">＋ Add Your Photos</a>
+  </div>
+</nav>
+
+<header class="head" id="head">
+  <p class="kicker">The Community Wall</p>
+  <h1>Fan Photos</h1>
+  <p>Shots from the crowd — scroll to dive in</p>
+</header>
+
+<div class="tunnel" id="tunnel" aria-label="Community photo tunnel"></div>
+<div class="grid-fallback" id="gridFallback"></div>
+<div class="hint" id="hint">Scroll or drag</div>
+
+<div class="state" id="stateBox" hidden>
+  <div class="inner">
+    <h2 id="stateTitle">Loading photos…</h2>
+    <p id="stateMsg"></p>
+    <a class="btn" href="https://drive.google.com/drive/folders/1NTmMKQkWCASOpHnfC7cIEHPXGnoIwfx-" target="_blank" rel="noopener">Be the first — add a photo</a>
+  </div>
+</div>
+
+<script>
+const FEED = 'https://n8n.srv1093570.hstgr.cloud/webhook/fcp-community-photos';
+const thumb = (id, w) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+const tunnel = document.getElementById('tunnel');
+const head = document.getElementById('head');
+const stateBox = document.getElementById('stateBox');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function showState(title, msg){
+  stateBox.hidden = false;
+  document.getElementById('stateTitle').textContent = title;
+  document.getElementById('stateMsg').textContent = msg;
+  document.getElementById('hint').style.display = 'none';
+}
+
+fetch(FEED).then(r => r.json()).then(feed => {
+  const photos = [
+    ...(feed.band || []).map(p => ({...p, label:'The Band'})),
+    ...(feed.events || []).flatMap(e =>
+      (e.photos || []).map(p => ({...p, label: e.folder.replace(/^\d{4}-\d{2}-\d{2}\s*/,'')})))
+  ];
+  if (!photos.length) return showState('No photos yet', 'The wall is waiting for its first shot from the crowd.');
+  stateBox.hidden = true;
+
+  if (reduced) {
+    const grid = document.getElementById('gridFallback');
+    photos.forEach(p => {
+      const img = new Image();
+      img.referrerPolicy = 'no-referrer';
+      img.src = thumb(p.id, 400); img.alt = p.label; img.loading = 'lazy';
+      grid.appendChild(img);
+    });
+    return;
+  }
+  startTunnel(photos);
+}).catch(() => showState('The wall is taking a breather', 'Photos could not be loaded right now — try again in a minute.'));
+
+function startTunnel(photos){
+  const DEPTH_GAP = 420;                       // z distance between cards
+  const CARD_COUNT = Math.min(Math.max(photos.length * 2, 10), 36);
+  const TOTAL = CARD_COUNT * DEPTH_GAP;
+  const NEAR = 160;                            // where cards pass the camera
+  const cards = [];
+
+  // deterministic pseudo-random offsets so cards form a scattered tunnel
+  const rand = s => { const x = Math.sin(s*127.1)*43758.5453; return x - Math.floor(x); };
+
+  for (let i = 0; i < CARD_COUNT; i++){
+    const p = photos[i % photos.length];
+    const el = document.createElement('div');
+    el.className = 'card';
+    const img = new Image();
+    img.referrerPolicy = 'no-referrer';
+    img.src = thumb(p.id, 640); img.alt = p.label; img.loading = 'lazy';
+    el.appendChild(img);
+    const tag = document.createElement('span');
+    tag.className = 'tag'; tag.textContent = p.label;
+    el.appendChild(tag);
+    tunnel.appendChild(el);
+    cards.push({
+      el,
+      xo: (rand(i+1) - .5) * 70,               // vw offset
+      yo: (rand(i+101) - .5) * 50,             // vh offset
+      slot: i * DEPTH_GAP
+    });
+  }
+
+  let target = 0, current = 0, lastInteract = 0;
+
+  addEventListener('wheel', e => { target += e.deltaY * 1.6; lastInteract = performance.now(); }, {passive:true});
+
+  let dragY = null;
+  tunnel.addEventListener('pointerdown', e => { dragY = e.clientY; tunnel.setPointerCapture(e.pointerId); });
+  tunnel.addEventListener('pointermove', e => {
+    if (dragY === null) return;
+    target += (dragY - e.clientY) * 4;
+    dragY = e.clientY; lastInteract = performance.now();
+  });
+  tunnel.addEventListener('pointerup', () => dragY = null);
+  tunnel.addEventListener('pointercancel', () => dragY = null);
+
+  function frame(now){
+    // gentle auto-drift when idle
+    if (now - lastInteract > 2500) target += 1.1;
+    current += (target - current) * .07;
+    head.classList.toggle('faded', current > 300);
+
+    for (const c of cards){
+      let z = (c.slot - current) % TOTAL;
+      if (z < -NEAR) z += TOTAL;
+      const t = z / TOTAL;                     // 0 = at camera, 1 = far
+      let opacity;
+      if (z < 0)        opacity = 1 + z / NEAR;          // passing the camera → fade out
+      else if (t > .55) opacity = Math.max(0, (1 - t) / .45); // far away → fade in
+      else              opacity = 1;
+      c.el.style.transform = `translate3d(${c.xo}vw, ${c.yo}vh, ${-z}px)`;
+      c.el.style.opacity = opacity.toFixed(3);
+      c.el.style.zIndex = Math.round(TOTAL - z);
+      c.el.style.visibility = opacity <= 0 ? 'hidden' : 'visible';
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>
