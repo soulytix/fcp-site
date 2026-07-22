@@ -9,6 +9,7 @@
 <meta property="og:description" content="A 10-piece high-energy dance & party band. The ultimate soundtrack to your event.">
 <meta property="og:image" content="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/rs=w:1200,h:630,cg:true">
 <meta name="theme-color" content="#0b0a10">
+<link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -53,8 +54,8 @@ section{padding-block:var(--space-12); position:relative}
   transition:border-color .3s;
 }
 .nav.scrolled{border-color:var(--line)}
-.nav .logo{font-family:'Archivo Black',sans-serif; font-size:1.05rem; color:var(--ink); letter-spacing:.06em}
-.nav .logo span{color:var(--gold)}
+.nav .logo{display:flex; align-items:center}
+.nav .logo img{height:2.75rem; width:auto}
 .nav ul{display:flex; gap:var(--space-3); list-style:none; align-items:center}
 .nav ul a{color:var(--ink-dim); font-size:.9rem; font-weight:500; padding:.5rem .25rem; transition:color .2s}
 .nav ul a:hover{color:var(--ink)}
@@ -177,26 +178,22 @@ section{padding-block:var(--space-12); position:relative}
 .vid iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
 
 /* ---------- gallery ---------- */
-.gal{display:grid; gap:var(--space-2); grid-template-columns:repeat(2,1fr)}
-@media(min-width:800px){ .gal{grid-template-columns:repeat(4,1fr)} .gal .tall{grid-row:span 2} }
-.gal figure{
-  border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
-  aspect-ratio:1/1; margin:0; position:relative;
+.gal{
+  position:relative; border-radius:var(--radius); overflow:hidden;
+  border:1px solid var(--line); aspect-ratio:4/3; touch-action:pan-y;
 }
+@media(min-width:800px){ .gal{aspect-ratio:16/8} }
+.gal figure{position:absolute; inset:0; margin:0; opacity:0; transition:opacity 1.1s ease; pointer-events:none}
+.gal figure.active{opacity:1; pointer-events:auto}
 /* TEMP review badges — remove before launch */
-.gal{counter-reset:pic}
-.gal figure::after,.about-img::after{
-  counter-increment:pic; content:counter(pic);
+.gal figure::after{
+  content:attr(data-n);
   position:absolute; top:.6rem; left:.6rem; z-index:3;
   width:2rem; height:2rem; display:grid; place-items:center;
   background:var(--gold); color:#181302; border-radius:50%;
   font-family:'Archivo Black',sans-serif; font-size:1rem;
 }
-.about-img{position:relative}
-.about-img::after{content:"A"}
-.gal .tall{aspect-ratio:auto}
-.gal img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease}
-.gal figure:hover img{transform:scale(1.06)}
+.gal img{width:100%; height:100%; object-fit:cover}
 .gal-note{margin-top:var(--space-3); color:var(--ink-dim); font-size:.9rem; font-weight:300}
 
 /* ---------- testimonials ---------- */
@@ -259,7 +256,7 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
 <body>
 
 <nav class="nav" id="nav" aria-label="Main">
-  <a class="logo" href="#top">FOUNTAIN CITY <span>PLAYERS</span></a>
+  <a class="logo" href="#top"><img src="assets/logo.webp" alt="Fountain City Players" width="480" height="270"></a>
   <ul>
     <li><a href="#about">The Band</a></li>
     <li><a href="#watch">Watch</a></li>
@@ -385,15 +382,16 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
       <h2>Photo Gallery</h2>
       <div class="rule"></div>
     </div>
-    <div class="gal">
-      <figure class="tall reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/cr=t:0%25,l:8.1%25,w:83.8%25,h:100%25/rs=w:806,h:403,cg:true" alt="Full band on stage under lights" loading="lazy" width="806" height="403"></figure>
-      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/-4563460734388497990-IMG-4078-Original.jpg/:/rs=w:740,cg:true,m" alt="Band performing live" loading="lazy" width="740" height="740"></figure>
-      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/1314115413605175881-IMG-4075-Original.jpg/:/rs=w:740,cg:true" alt="Vocalists on stage" loading="lazy" width="740" height="740"></figure>
-      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01201-Original.jpg/:/rs=w:740,cg:true,m" alt="Horn section performing" loading="lazy" width="740" height="740"></figure>
-      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01202-Original.jpg/:/rs=w:740,cg:true,m" alt="Band members performing" loading="lazy" width="740" height="740"></figure>
-      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-3145-Original.jpg/:/rs=w:740,cg:true,m" alt="Fountain City Players group shot" loading="lazy" width="740" height="740"></figure>
-      <figure class="reveal"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01204-Original.jpg/:/rs=w:740,cg:true" alt="Stage view of the full band" loading="lazy" width="740" height="740"></figure>
+    <div class="gal reveal" aria-roledescription="carousel" aria-label="Band photo gallery">
+      <figure class="active" data-n="1"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-7002.jpg/:/cr=t:0%25,l:8.1%25,w:83.8%25,h:100%25/rs=w:1209,h:605,cg:true" alt="Full band on stage under lights" width="1209" height="605"></figure>
+      <figure data-n="2"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/-4563460734388497990-IMG-4078-Original.jpg/:/rs=w:1110,cg:true,m" alt="Band performing live" loading="lazy" width="1110" height="1110"></figure>
+      <figure data-n="3"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/1314115413605175881-IMG-4075-Original.jpg/:/rs=w:1110,cg:true" alt="Vocalists on stage" loading="lazy" width="1110" height="1110"></figure>
+      <figure data-n="4"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01201-Original.jpg/:/rs=w:1110,cg:true,m" alt="Horn section performing" loading="lazy" width="1110" height="1110"></figure>
+      <figure data-n="5"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01202-Original.jpg/:/rs=w:1110,cg:true,m" alt="Band members performing" loading="lazy" width="1110" height="1110"></figure>
+      <figure data-n="6"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/IMG-3145-Original.jpg/:/rs=w:1110,cg:true,m" alt="Fountain City Players group shot" loading="lazy" width="1110" height="1110"></figure>
+      <figure data-n="7"><img src="https://img1.wsimg.com/isteam/ip/9c301dca-d23d-4ec6-97ab-4e3c23bf670d/DSC01204-Original.jpg/:/rs=w:1110,cg:true" alt="Stage view of the full band" loading="lazy" width="1110" height="1110"></figure>
     </div>
+    <div class="q-nav gal-nav" role="tablist" aria-label="Gallery photos"></div>
     <p class="gal-note reveal">Coming soon: fan photos — snap a QR code at the show and add your shots to the wall.</p>
   </div>
 </section>
@@ -487,7 +485,7 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
 
 <footer>
   <div class="wrap foot">
-    <a class="logo nav-logo" href="#top" style="font-family:'Archivo Black',sans-serif">FOUNTAIN CITY <span style="color:var(--gold)">PLAYERS</span></a>
+    <a class="logo" href="#top"><img src="assets/logo.webp" alt="Fountain City Players" style="height:3.5rem;width:auto" width="480" height="270"></a>
     <div class="socials">
       <a href="https://www.facebook.com/The-FountainCity-Players-1025408187497439/" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
       <a href="https://www.instagram.com/musicgardenbands/" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.74 1.69 4.89 4.89.06 1.25.07 1.64.07 4.84s0 3.6-.07 4.85c-.15 3.2-1.64 4.74-4.89 4.89-1.25.06-1.64.07-4.85.07s-3.6 0-4.84-.07c-3.26-.15-4.74-1.7-4.89-4.9-.06-1.24-.07-1.63-.07-4.84s0-3.6.07-4.84C2.42 3.96 3.9 2.42 7.16 2.27 8.4 2.21 8.8 2.2 12 2.2zm0 3.68a6.12 6.12 0 1 0 0 12.24 6.12 6.12 0 0 0 0-12.24zm0 10.09a3.97 3.97 0 1 1 0-7.94 3.97 3.97 0 0 1 0 7.94zm6.36-11.77a1.43 1.43 0 1 0 0 2.86 1.43 1.43 0 0 0 0-2.86z"/></svg></a>
@@ -531,7 +529,7 @@ document.querySelectorAll('.vid').forEach(v => {
 
 // testimonial rotator
 const quotes = [...document.querySelectorAll('.quote')];
-const qnav = document.querySelector('.q-nav');
+const qnav = document.querySelector('#love .q-nav');
 let qi = 0, qtimer;
 quotes.forEach((_, i) => {
   const b = document.createElement('button');
@@ -549,6 +547,42 @@ function show(i){
 }
 function restart(){ clearInterval(qtimer); qtimer = setInterval(() => show((qi+1)%quotes.length), 7000); }
 restart();
+
+// gallery crossfade carousel with swipe
+(() => {
+  const gal = document.querySelector('.gal');
+  const slides = [...gal.querySelectorAll('figure')];
+  const gnav = document.querySelector('.gal-nav');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let gi = 0, gtimer;
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'q-dot' + (i === 0 ? ' active' : '');
+    b.setAttribute('aria-label', `Photo ${i+1}`);
+    b.innerHTML = '<i></i>';
+    b.addEventListener('click', () => { go(i); rearm(); });
+    gnav.appendChild(b);
+  });
+  const gdots = [...gnav.children];
+  function go(i){
+    slides[gi].classList.remove('active'); gdots[gi].classList.remove('active');
+    gi = (i + slides.length) % slides.length;
+    slides[gi].classList.add('active'); gdots[gi].classList.add('active');
+  }
+  function rearm(){
+    clearInterval(gtimer);
+    if (!reduced) gtimer = setInterval(() => go(gi+1), 4500);
+  }
+  rearm();
+  // swipe
+  let sx = null;
+  gal.addEventListener('pointerdown', e => sx = e.clientX);
+  gal.addEventListener('pointerup', e => {
+    if (sx === null) return;
+    const dx = e.clientX - sx; sx = null;
+    if (Math.abs(dx) > 40){ go(gi + (dx < 0 ? 1 : -1)); rearm(); }
+  });
+})();
 
 // scroll animations (skipped for reduced motion)
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap) {
