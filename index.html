@@ -153,10 +153,22 @@ section{padding-block:var(--space-12); position:relative}
 .chip:hover{border-color:var(--gold); color:var(--ink); transform:translateY(-2px)}
 .chip b{color:var(--gold); font-weight:600}
 
-/* ---------- video wall ---------- */
-.vid-grid{display:grid; gap:var(--space-2); grid-template-columns:1fr}
-@media(min-width:700px){ .vid-grid{grid-template-columns:repeat(2,1fr)} }
-@media(min-width:1024px){ .vid-grid{grid-template-columns:repeat(3,1fr)} .vid-grid .feature{grid-column:span 2; grid-row:span 2} }
+/* ---------- video scroller ---------- */
+.vid-scroller{
+  display:flex; gap:var(--space-2); overflow-x:auto;
+  scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  padding-bottom:var(--space-1); scrollbar-width:none;
+}
+.vid-scroller::-webkit-scrollbar{display:none}
+.vid-scroller .vid{flex:0 0 min(84vw,34rem); scroll-snap-align:center}
+.vid-nav{display:flex; gap:var(--space-2); justify-content:center; margin-top:var(--space-3)}
+.vid-arrow{
+  width:48px; height:48px; border-radius:50%; cursor:pointer;
+  border:1px solid var(--line); background:var(--bg-raised);
+  display:grid; place-items:center; transition:border-color .2s, transform .2s;
+}
+.vid-arrow:hover{border-color:var(--gold); transform:translateY(-2px)}
+.vid-arrow svg{width:20px; height:20px; stroke:var(--gold); fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round}
 .vid{
   position:relative; aspect-ratio:16/9; border-radius:var(--radius); overflow:hidden;
   border:1px solid var(--line); cursor:pointer; background:var(--bg-raised);
@@ -175,13 +187,6 @@ section{padding-block:var(--space-12); position:relative}
 .vid:hover .play svg{fill:#181302}
 .vid .vlabel{position:absolute; left:1rem; bottom:.8rem; z-index:2; font-size:.85rem; font-weight:500; color:var(--ink); pointer-events:none}
 .vid iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
-/* scroll-driven video stack (applied by JS when motion is allowed) */
-.vid-grid.stacked{display:block; position:relative; height:min(72vh,42rem)}
-.vid-grid.stacked .vid{
-  position:absolute; inset:0; margin:auto;
-  width:min(100%,56rem); height:auto; aspect-ratio:16/9;
-  opacity:0; visibility:hidden;
-}
 
 /* ---------- gallery ---------- */
 .gal{
@@ -295,13 +300,13 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="kicker">The Band</p>
-      <h2>A Picturesque Adventure Into Sound</h2>
+      <h2>The Ultimate Soundtrack to Your Event</h2>
       <div class="rule"></div>
     </div>
     <div class="about-grid">
       <div class="about-copy reveal">
         <p><strong>Fountain City Players</strong> is a 10-piece musical adventure into sound, sight, and mind — a high-energy dance and party band playing Motown, Top 40, classic soul, blues, jazz, and R&B.</p>
-        <p>From the first downbeat to the last encore, we don't just play music — we provide the ultimate soundtrack to your event. Full horn section, powerhouse vocals, and a rhythm section that keeps the floor packed all night.</p>
+        <p>From the first downbeat to the last encore, we don't just play songs — we build the night around you. Full horn section, powerhouse vocals, and a rhythm section that keeps the floor packed all night.</p>
         <div class="stats">
           <div class="stat"><b>10</b><span>Musicians</span></div>
           <div class="stat"><b>6+</b><span>Genres</span></div>
@@ -323,7 +328,7 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
       <h2>Watch Us Live</h2>
       <div class="rule"></div>
     </div>
-    <div class="vid-grid" id="vidStack">
+    <div class="vid-scroller reveal" id="vidScroller" aria-label="Live performance videos">
       <button class="vid feature" data-yt="5LqSr6vdVWM" aria-label="Play video: Fountain City Players promo">
         <img src="https://i.ytimg.com/vi/5LqSr6vdVWM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
@@ -354,6 +359,10 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
         <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="vlabel">Live on Stage</span>
       </button>
+    </div>
+    <div class="vid-nav">
+      <button class="vid-arrow" id="vidPrev" aria-label="Previous video"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="vid-arrow" id="vidNext" aria-label="Next video"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>
   </div>
 </section>
@@ -495,7 +504,7 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
       <a href="https://www.instagram.com/musicgardenbands/" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.74 1.69 4.89 4.89.06 1.25.07 1.64.07 4.84s0 3.6-.07 4.85c-.15 3.2-1.64 4.74-4.89 4.89-1.25.06-1.64.07-4.85.07s-3.6 0-4.84-.07c-3.26-.15-4.74-1.7-4.89-4.9-.06-1.24-.07-1.63-.07-4.84s0-3.6.07-4.84C2.42 3.96 3.9 2.42 7.16 2.27 8.4 2.21 8.8 2.2 12 2.2zm0 3.68a6.12 6.12 0 1 0 0 12.24 6.12 6.12 0 0 0 0-12.24zm0 10.09a3.97 3.97 0 1 1 0-7.94 3.97 3.97 0 0 1 0 7.94zm6.36-11.77a1.43 1.43 0 1 0 0 2.86 1.43 1.43 0 0 0 0-2.86z"/></svg></a>
       <a href="https://www.youtube.com/channel/UCwF5MrBA8B0DsEXLw7i5IOQ" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a>
     </div>
-    <small>© 2026 Fountain City Players · Booked by <a href="https://musicgarden.net">Music Garden Bands</a></small>
+    <small>© 2026 Fountain City Players · Booked by <a href="https://musicgarden.net">Music Garden Bands</a> · Website by Soulytix Studios</small>
   </div>
 </footer>
 
@@ -513,6 +522,15 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
   }
   v.addEventListener('playing', () => v.classList.add('playing'), {once:true});
   v.play().catch(() => {});
+})();
+
+// video scroller arrows
+(() => {
+  const sc = document.getElementById('vidScroller');
+  if (!sc) return;
+  const step = () => sc.querySelector('.vid').getBoundingClientRect().width + 16;
+  document.getElementById('vidPrev').addEventListener('click', () => sc.scrollBy({left:-step(), behavior:'smooth'}));
+  document.getElementById('vidNext').addEventListener('click', () => sc.scrollBy({left:step(), behavior:'smooth'}));
 })();
 
 // nav border on scroll
@@ -600,21 +618,6 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap) {
   gsap.to('.hero .wrap', {opacity:0, y:-60, ease:'none',
     scrollTrigger:{trigger:'.hero', start:'top top', end:'70% top', scrub:true}});
 
-  // watch us live: scroll-driven vertical fade from one video to the next
-  const stack = document.getElementById('vidStack');
-  if (stack){
-    stack.classList.add('stacked');
-    const vids = gsap.utils.toArray(stack.querySelectorAll('.vid'));
-    gsap.set(vids[0], {autoAlpha:1, y:0});
-    const tl = gsap.timeline({scrollTrigger:{
-      trigger:'#watch', start:'top 64', end:'+=' + (vids.length*70) + '%',
-      scrub:true, pin:true, anticipatePin:1}});
-    vids.forEach((v, i) => {
-      if (i > 0) tl.fromTo(v, {autoAlpha:0, y:70}, {autoAlpha:1, y:0, duration:1, ease:'none'});
-      tl.to(v, {duration:.7});                                   // dwell so it can be watched/clicked
-      if (i < vids.length - 1) tl.to(v, {autoAlpha:0, y:-70, duration:1, ease:'none'});
-    });
-  }
 
   // section reveals
   document.querySelectorAll('main .reveal, footer .reveal').forEach(el => {
