@@ -108,7 +108,7 @@ a{color:var(--gold); text-decoration:none}
   <a href="index.html" aria-label="Back to Fountain City Players home"><img src="assets/logo.webp" alt="Fountain City Players"></a>
   <div class="actions">
     <a class="btn-ghost" href="index.html">← Main Site</a>
-    <a class="btn" id="uploadBtn" href="https://drive.google.com/drive/folders/1NTmMKQkWCASOpHnfC7cIEHPXGnoIwfx-" target="_blank" rel="noopener">＋ Add Your Photos</a>
+    <a class="btn" id="uploadBtn" href="https://drive.google.com/drive/folders/1Jo0MRqEZjmLXNwASHos4MIOaNDf870Ag" target="_blank" rel="noopener">＋ Add Your Photos</a>
   </div>
 </nav>
 
@@ -126,7 +126,7 @@ a{color:var(--gold); text-decoration:none}
   <div class="inner">
     <h2 id="stateTitle">Loading photos…</h2>
     <p id="stateMsg"></p>
-    <a class="btn" href="https://drive.google.com/drive/folders/1NTmMKQkWCASOpHnfC7cIEHPXGnoIwfx-" target="_blank" rel="noopener">Be the first — add a photo</a>
+    <a class="btn" href="https://drive.google.com/drive/folders/1Jo0MRqEZjmLXNwASHos4MIOaNDf870Ag" target="_blank" rel="noopener">Be the first — add a photo</a>
   </div>
 </div>
 
@@ -146,11 +146,8 @@ function showState(title, msg){
 }
 
 fetch(FEED).then(r => r.json()).then(feed => {
-  const photos = [
-    ...(feed.band || []).map(p => ({...p, label:'The Band'})),
-    ...(feed.events || []).flatMap(e =>
-      (e.photos || []).map(p => ({...p, label: e.folder.replace(/^\d{4}-\d{2}-\d{2}\s*/,'')})))
-  ];
+  const photos = (feed.events || []).flatMap(e =>
+    (e.photos || []).map(p => ({...p, label: e.folder.replace(/^\d{4}-\d{2}-\d{2}\s*/,'')})));
   if (!photos.length) return showState('No photos yet', 'The wall is waiting for its first shot from the crowd.');
   stateBox.hidden = true;
 
