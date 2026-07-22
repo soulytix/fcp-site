@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Band Uploads — Fountain City Players</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a10; --bg-raised:#141220; --ink:#f5f2ea; --ink-dim:#b9b3a6;
+  --gold:#e8b44a; --line:#2a2638; --ok:#4ade80; --bad:#f87171;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none !important}
+body{
+  background:var(--bg); color:var(--ink); min-height:100dvh;
+  font-family:'Poppins',system-ui,sans-serif; line-height:1.6;
+  display:flex; flex-direction:column; align-items:center;
+  padding:1.2rem 1.2rem 3rem;
+}
+a{color:var(--gold); text-decoration:none}
+.logo{height:4.5rem; width:auto; margin:1.5rem 0 1rem}
+h1{font-family:'Archivo Black',sans-serif; font-size:clamp(1.5rem,6vw,2.2rem); text-transform:uppercase; text-align:center}
+.sub{color:var(--ink-dim); font-weight:300; font-size:.95rem; text-align:center; max-width:24rem; margin-top:.8rem}
+
+.panel{width:min(100%,26rem); margin-top:1.6rem}
+.gate input{
+  width:100%; padding:.9rem 1.1rem; font:inherit; color:var(--ink);
+  background:var(--bg-raised); border:1px solid var(--line); border-radius:12px;
+  text-align:center; letter-spacing:.08em;
+}
+.gate input:focus{border-color:var(--gold); outline:none}
+.gate .err{color:var(--bad); font-size:.85rem; text-align:center; margin-top:.6rem; min-height:1.3em}
+
+.drop{
+  border:2px dashed var(--line); border-radius:14px; background:var(--bg-raised);
+  padding:1rem 1.2rem; cursor:pointer; transition:border-color .2s;
+  display:flex; align-items:center; gap:.9rem; text-align:left;
+}
+.drop:hover,.drop.drag{border-color:var(--gold)}
+.drop svg{width:26px; height:26px; stroke:var(--gold); fill:none; stroke-width:1.8; flex:none}
+.drop b{display:block; font-weight:600; font-size:.95rem; line-height:1.3}
+.drop span{color:var(--ink-dim); font-size:.78rem; font-weight:300; line-height:1.3}
+input[type=file]{display:none}
+
+.list{margin-top:1rem; display:grid; gap:.5rem}
+.row{
+  display:flex; align-items:center; gap:.8rem;
+  background:var(--bg-raised); border:1px solid var(--line);
+  border-radius:12px; padding:.6rem .8rem;
+}
+.row img,.row video{width:44px; height:44px; object-fit:cover; border-radius:8px; flex:none; background:#000}
+.row .name{flex:1; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.row .name small{display:block; color:var(--ink-dim); font-weight:300}
+.row .st{font-size:.8rem; font-weight:600; flex:none}
+.st.wait{color:var(--ink-dim)} .st.up{color:var(--gold)} .st.done{color:var(--ok)} .st.err{color:var(--bad)}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  background:var(--gold); color:#181302; font-weight:600; font-size:1rem;
+  padding:.9rem 2rem; border-radius:999px; border:none; cursor:pointer;
+  width:100%; margin-top:1.2rem; transition:filter .2s;
+}
+.btn:disabled{opacity:.45; cursor:default}
+.btn:not(:disabled):hover{filter:brightness(1.1)}
+.donebox{text-align:center; margin-top:1.4rem; display:none}
+.donebox h2{font-family:'Archivo Black',sans-serif; color:var(--ok); font-size:1.2rem}
+.donebox p{color:var(--ink-dim); font-weight:300; font-size:.9rem; margin:.4rem 0 1rem}
+.foot{margin-top:auto; padding-top:2.5rem; color:var(--ink-dim); font-size:.75rem; font-weight:300; text-align:center}
+</style>
+</head>
+<body>
+
+<a href="index.html"><img class="logo" src="assets/logo.webp" alt="Fountain City Players"></a>
+<h1>Band Uploads</h1>
+<p class="sub" id="subText">Backstage only — photos &amp; videos land in the Community Band folder for the website gallery.</p>
+
+<div class="panel gate" id="gate">
+  <input id="keyInput" type="password" placeholder="Band passcode" autocomplete="current-password">
+  <div class="err" id="keyErr"></div>
+  <button class="btn" id="keyBtn">Enter</button>
+</div>
+
+<div class="panel" id="panel" hidden>
+  <label class="drop" id="drop" for="fileInput">
+    <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0 4 4m-4-4-4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke-linecap="round"/></svg>
+    <div><b>Tap to choose photos or videos</b>
+    <span>or drag them here · videos up to ~200MB</span></div>
+  </label>
+  <input id="fileInput" type="file" accept="image/*,video/*" multiple>
+  <div class="list" id="list"></div>
+  <button class="btn" id="sendBtn" disabled>Upload</button>
+  <div class="donebox" id="doneBox">
+    <h2>Uploaded ✓</h2>
+    <p>Everything's in the Community Band folder — ready to be worked into the site gallery.</p>
+    <a class="btn" href="https://drive.google.com/drive/folders/1xQWWQTmJnv4Kaqin7XXDgajkg7-iLczz" target="_blank" rel="noopener" style="width:auto">Open the Drive folder</a>
+  </div>
+</div>
+
+<p class="foot">Fountain City Players · band use only</p>
+
+<script>
+const UPLOAD_URL = 'https://n8n.srv1093570.hstgr.cloud/webhook/fcp-community-upload';
+const BAND_FOLDER = '1xQWWQTmJnv4Kaqin7XXDgajkg7-iLczz';
+const MAX_BYTES = 200 * 1024 * 1024;
+const gate = document.getElementById('gate');
+const panel = document.getElementById('panel');
+const keyInput = document.getElementById('keyInput');
+const keyErr = document.getElementById('keyErr');
+const list = document.getElementById('list');
+const sendBtn = document.getElementById('sendBtn');
+const fileInput = document.getElementById('fileInput');
+const drop = document.getElementById('drop');
+let queue = [];
+let bandKey = localStorage.getItem('fcpBandKey') || '';
+
+function openPanel(){ gate.hidden = true; panel.hidden = false; }
+if (bandKey) openPanel();
+
+document.getElementById('keyBtn').addEventListener('click', () => {
+  bandKey = keyInput.value.trim();
+  if (!bandKey) { keyErr.textContent = 'Enter the passcode.'; return; }
+  localStorage.setItem('fcpBandKey', bandKey);
+  openPanel();
+});
+keyInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('keyBtn').click(); });
+
+const fmtSize = b => b > 1048576 ? (b/1048576).toFixed(1) + ' MB' : Math.round(b/1024) + ' KB';
+
+function addFiles(files){
+  for (const f of files){
+    const isMedia = /^(image|video)\//.test(f.type) || /\.(heic|mov)$/i.test(f.name);
+    if (!isMedia) continue;
+    const row = document.createElement('div');
+    row.className = 'row';
+    let prev;
+    if (/^video\//.test(f.type) || /\.mov$/i.test(f.name)){
+      prev = document.createElement('video');
+      prev.muted = true; prev.playsInline = true; prev.preload = 'metadata';
+    } else {
+      prev = new Image();
+    }
+    prev.src = URL.createObjectURL(f);
+    row.appendChild(prev);
+    const name = document.createElement('span');
+    name.className = 'name';
+    name.textContent = f.name;
+    const small = document.createElement('small');
+    small.textContent = fmtSize(f.size);
+    name.appendChild(small);
+    row.appendChild(name);
+    const st = document.createElement('span');
+    st.className = 'st wait'; st.textContent = 'ready';
+    if (f.size > MAX_BYTES){ st.className = 'st err'; st.textContent = 'too big — use Drive'; }
+    row.appendChild(st);
+    list.appendChild(row);
+    queue.push({file: f, st, done: false, skip: f.size > MAX_BYTES});
+  }
+  sendBtn.disabled = queue.filter(q => !q.done && !q.skip).length === 0;
+}
+
+fileInput.addEventListener('change', () => addFiles(fileInput.files));
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('drag'); addFiles(e.dataTransfer.files); });
+
+sendBtn.addEventListener('click', async () => {
+  sendBtn.disabled = true;
+  sendBtn.textContent = 'Uploading…';
+  let okCount = 0, total = queue.filter(q => !q.skip).length;
+  for (const q of queue){
+    if (q.done || q.skip) { if (q.done) okCount++; continue; }
+    q.st.className = 'st up'; q.st.textContent = 'uploading…';
+    try {
+      const fd = new FormData();
+      fd.append('folder', BAND_FOLDER);
+      fd.append('key', bandKey);
+      fd.append('file', q.file, q.file.name);
+      const res = await fetch(UPLOAD_URL, { method: 'POST', body: fd });
+      const out = await res.json().catch(() => ({}));
+      if (res.ok && out.ok){ q.done = true; okCount++; q.st.className = 'st done'; q.st.textContent = 'added ✓'; }
+      else if (res.status === 403){
+        q.st.className = 'st err'; q.st.textContent = 'passcode rejected';
+        localStorage.removeItem('fcpBandKey');
+        keyErr.textContent = 'Wrong passcode — try again.';
+        gate.hidden = false; panel.hidden = true;
+        sendBtn.disabled = false; sendBtn.textContent = 'Upload';
+        return;
+      }
+      else { q.st.className = 'st err'; q.st.textContent = 'failed — tap Upload to retry'; }
+    } catch (e) {
+      q.st.className = 'st err'; q.st.textContent = 'failed — tap Upload to retry';
+    }
+  }
+  if (okCount === total && total){
+    sendBtn.style.display = 'none';
+    document.getElementById('doneBox').style.display = 'block';
+  } else {
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Upload';
+  }
+});
+</script>
+</body>
+</html>
