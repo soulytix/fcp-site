@@ -97,12 +97,14 @@ section{padding-block:var(--space-12); position:relative}
   color:var(--gold); font-weight:600; letter-spacing:.35em; text-transform:uppercase;
   font-size:.8rem; margin-bottom:var(--space-2);
 }
-.hero h1{
-  font-size:clamp(2.6rem,8vw,5.5rem); text-transform:uppercase;
-  text-shadow:0 4px 40px rgba(0,0,0,.6);
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
 }
-.hero h1 .line{display:block; overflow:hidden}
-.hero h1 .line>span{display:inline-block}
+.hero-logo{
+  width:min(82vw,36rem); height:auto; margin-inline:auto;
+  filter:drop-shadow(0 10px 50px rgba(120,60,220,.45));
+}
 .hero p.lede{
   max-width:38rem; margin:var(--space-3) auto var(--space-4);
   color:var(--ink-dim); font-size:clamp(1rem,2vw,1.2rem); font-weight:300;
@@ -273,10 +275,7 @@ footer{padding:var(--space-6) 0; border-top:1px solid var(--line)}
   </div>
   <div class="wrap">
     <p class="kicker reveal">Motown · Soul · Blues · Jazz · R&B</p>
-    <h1>
-      <span class="line"><span>Fountain City</span></span>
-      <span class="line"><span style="color:var(--gold)">Players</span></span>
-    </h1>
+    <h1><span class="sr-only">Fountain City Players</span><img class="hero-logo" src="assets/hero-logo.webp" alt="" width="1100" height="561"></h1>
     <p class="lede reveal">A 10-piece live show band bringing the ultimate soundtrack to your wedding, corporate event, or party — sound, sight, and soul.</p>
     <div class="hero-ctas reveal">
       <a class="btn" href="#book">Book the Band</a>
@@ -588,8 +587,8 @@ restart();
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // hero headline lines rise in
-  gsap.from('.hero h1 .line > span', {yPercent:110, duration:.9, ease:'power3.out', stagger:.12, delay:.15});
+  // hero logo swells in
+  gsap.from('.hero-logo', {opacity:0, scale:.86, y:20, duration:1.1, ease:'power3.out', delay:.15});
   gsap.from('.hero .kicker, .hero .lede, .hero-ctas', {opacity:0, y:24, duration:.8, ease:'power2.out', stagger:.12, delay:.5});
 
   // subtle hero parallax
