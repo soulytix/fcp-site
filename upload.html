@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share Your Photos — Fountain City Players</title>
+<meta name="description" content="Share your photos from a Fountain City Players show — they join the band's community photo wall.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a10; --bg-raised:#141220; --ink:#f5f2ea; --ink-dim:#b9b3a6;
+  --gold:#e8b44a; --line:#2a2638; --ok:#4ade80; --bad:#f87171;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink); min-height:100dvh;
+  font-family:'Poppins',system-ui,sans-serif; line-height:1.6;
+  display:flex; flex-direction:column; align-items:center;
+  padding:1.2rem 1.2rem 3rem;
+}
+a{color:var(--gold); text-decoration:none}
+.logo{height:4.5rem; width:auto; margin:1.5rem 0 1rem}
+h1{font-family:'Archivo Black',sans-serif; font-size:clamp(1.5rem,6vw,2.2rem); text-transform:uppercase; text-align:center}
+.event-tag{
+  margin-top:.6rem; color:var(--gold); font-weight:600; font-size:.9rem;
+  border:1px solid var(--line); background:var(--bg-raised);
+  padding:.4rem 1.1rem; border-radius:999px;
+}
+.sub{color:var(--ink-dim); font-weight:300; font-size:.95rem; text-align:center; max-width:24rem; margin-top:.8rem}
+
+.panel{width:min(100%,26rem); margin-top:1.6rem}
+.drop{
+  border:2px dashed var(--line); border-radius:16px; background:var(--bg-raised);
+  padding:2.2rem 1.2rem; text-align:center; cursor:pointer;
+  transition:border-color .2s;
+}
+.drop:hover,.drop.drag{border-color:var(--gold)}
+.drop svg{width:40px; height:40px; stroke:var(--gold); fill:none; stroke-width:1.6; margin-bottom:.6rem}
+.drop b{display:block; font-weight:600}
+.drop span{color:var(--ink-dim); font-size:.85rem; font-weight:300}
+input[type=file]{display:none}
+
+.list{margin-top:1rem; display:grid; gap:.5rem}
+.row{
+  display:flex; align-items:center; gap:.8rem;
+  background:var(--bg-raised); border:1px solid var(--line);
+  border-radius:12px; padding:.6rem .8rem;
+}
+.row img{width:44px; height:44px; object-fit:cover; border-radius:8px; flex:none}
+.row .name{flex:1; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.row .st{font-size:.8rem; font-weight:600; flex:none}
+.st.wait{color:var(--ink-dim)} .st.up{color:var(--gold)} .st.done{color:var(--ok)} .st.err{color:var(--bad)}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  background:var(--gold); color:#181302; font-weight:600; font-size:1rem;
+  padding:.9rem 2rem; border-radius:999px; border:none; cursor:pointer;
+  width:100%; margin-top:1.2rem; transition:filter .2s;
+}
+.btn:disabled{opacity:.45; cursor:default}
+.btn:not(:disabled):hover{filter:brightness(1.1)}
+.donebox{text-align:center; margin-top:1.4rem; display:none}
+.donebox h2{font-family:'Archivo Black',sans-serif; color:var(--ok); font-size:1.2rem}
+.donebox p{color:var(--ink-dim); font-weight:300; font-size:.9rem; margin:.4rem 0 1rem}
+.foot{margin-top:auto; padding-top:2.5rem; color:var(--ink-dim); font-size:.75rem; font-weight:300}
+
+.picker{width:min(100%,26rem); margin-top:1.6rem; display:grid; gap:.7rem}
+.picker a{
+  display:block; background:var(--bg-raised); border:1px solid var(--line);
+  border-radius:12px; padding:1rem 1.2rem; color:var(--ink); font-weight:500;
+  transition:border-color .2s;
+}
+.picker a:hover{border-color:var(--gold)}
+.picker a small{display:block; color:var(--ink-dim); font-weight:300; font-size:.8rem}
+</style>
+</head>
+<body>
+
+<a href="index.html"><img class="logo" src="assets/logo.webp" alt="Fountain City Players"></a>
+<h1>Share Your Photos</h1>
+<div class="event-tag" id="eventTag" hidden></div>
+<p class="sub" id="subText">Add your shots from the show — they'll join the band's community photo wall.</p>
+
+<div class="picker" id="picker" hidden></div>
+
+<div class="panel" id="panel" hidden>
+  <label class="drop" id="drop" for="fileInput">
+    <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0 4 4m-4-4-4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke-linecap="round"/></svg>
+    <b>Tap to choose photos</b>
+    <span>or drag them here · JPG, PNG, HEIC</span>
+  </label>
+  <input id="fileInput" type="file" accept="image/*" multiple>
+  <div class="list" id="list"></div>
+  <button class="btn" id="sendBtn" disabled>Upload Photos</button>
+  <div class="donebox" id="doneBox">
+    <h2>You're on the wall! 🎉</h2>
+    <p>Your photos have been added. They'll appear on the Fan Photo Wall within a couple of minutes.</p>
+    <a class="btn" href="community.html" style="width:auto">See the Photo Wall</a>
+  </div>
+</div>
+
+<p class="foot">Fountain City Players · photos are shared with the band and may appear on our website</p>
+
+<script>
+const UPLOAD_URL = 'https://n8n.srv1093570.hstgr.cloud/webhook/fcp-community-upload';
+const FEED_URL = 'https://n8n.srv1093570.hstgr.cloud/webhook/fcp-community-photos';
+const folderId = new URLSearchParams(location.search).get('e');
+const panel = document.getElementById('panel');
+const picker = document.getElementById('picker');
+const eventTag = document.getElementById('eventTag');
+const subText = document.getElementById('subText');
+const list = document.getElementById('list');
+const sendBtn = document.getElementById('sendBtn');
+const fileInput = document.getElementById('fileInput');
+const drop = document.getElementById('drop');
+let queue = [];
+
+if (folderId) {
+  panel.hidden = false;
+  fetch(FEED_URL).then(r => r.json()).then(feed => {
+    const ev = (feed.events || []).find(e => e.folderId === folderId);
+    if (ev) {
+      eventTag.textContent = ev.folder.replace(/^\d{4}-\d{2}-\d{2}\s*/,'');
+      eventTag.hidden = false;
+    }
+  }).catch(() => {});
+} else {
+  subText.textContent = 'Which show were you at?';
+  picker.hidden = false;
+  fetch(FEED_URL).then(r => r.json()).then(feed => {
+    const events = feed.events || [];
+    if (!events.length) { picker.innerHTML = '<a href="community.html">No shows listed right now — visit the Photo Wall</a>'; return; }
+    events.forEach(e => {
+      const m = e.folder.match(/^(\d{4}-\d{2}-\d{2})\s*(.*)$/) || [null,'',e.folder];
+      const a = document.createElement('a');
+      a.href = 'upload.html?e=' + e.folderId;
+      a.innerHTML = '<small></small>';
+      a.prepend(document.createTextNode(m[2] || e.folder));
+      a.querySelector('small').textContent = m[1] || '';
+      picker.appendChild(a);
+    });
+  }).catch(() => picker.innerHTML = '<a href="community.html">Could not load shows — visit the Photo Wall</a>');
+}
+
+function addFiles(files){
+  for (const f of files){
+    if (!/^image\//.test(f.type) && !/\.heic$/i.test(f.name)) continue;
+    const row = document.createElement('div');
+    row.className = 'row';
+    const img = new Image();
+    img.src = URL.createObjectURL(f);
+    row.appendChild(img);
+    const name = document.createElement('span');
+    name.className = 'name'; name.textContent = f.name;
+    row.appendChild(name);
+    const st = document.createElement('span');
+    st.className = 'st wait'; st.textContent = 'ready';
+    row.appendChild(st);
+    list.appendChild(row);
+    queue.push({file: f, st, done: false});
+  }
+  sendBtn.disabled = queue.filter(q => !q.done).length === 0;
+}
+
+fileInput.addEventListener('change', () => addFiles(fileInput.files));
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('drag'); addFiles(e.dataTransfer.files); });
+
+sendBtn.addEventListener('click', async () => {
+  sendBtn.disabled = true;
+  sendBtn.textContent = 'Uploading…';
+  let okCount = 0;
+  for (const q of queue){
+    if (q.done) { okCount++; continue; }
+    q.st.className = 'st up'; q.st.textContent = 'uploading…';
+    try {
+      const fd = new FormData();
+      fd.append('folder', folderId);
+      fd.append('file', q.file, q.file.name);
+      const res = await fetch(UPLOAD_URL, { method: 'POST', body: fd });
+      const out = await res.json().catch(() => ({}));
+      if (res.ok && out.ok){ q.done = true; okCount++; q.st.className = 'st done'; q.st.textContent = 'added ✓'; }
+      else { q.st.className = 'st err'; q.st.textContent = 'failed — tap Upload to retry'; }
+    } catch (e) {
+      q.st.className = 'st err'; q.st.textContent = 'failed — tap Upload to retry';
+    }
+  }
+  if (okCount === queue.length && queue.length){
+    sendBtn.style.display = 'none';
+    document.getElementById('doneBox').style.display = 'block';
+  } else {
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Upload Photos';
+  }
+});
+</script>
+</body>
+</html>
