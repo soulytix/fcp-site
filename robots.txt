@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /band.html
+Disallow: /upload.html
+
+Sitemap: https://fountaincityplayers.com/sitemap.xml
