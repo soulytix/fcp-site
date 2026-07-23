@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event QR Codes — Fountain City Players</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a10; --bg-raised:#141220; --ink:#f5f2ea; --ink-dim:#b9b3a6;
+  --gold:#e8b44a; --line:#2a2638;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none !important}
+body{
+  background:var(--bg); color:var(--ink); min-height:100dvh;
+  font-family:'Poppins',system-ui,sans-serif; line-height:1.6;
+  display:flex; flex-direction:column; align-items:center;
+  padding:1.2rem 1.2rem 3rem;
+}
+a{color:var(--gold); text-decoration:none}
+.logo{height:4rem; width:auto; margin:1.2rem 0 .8rem}
+h1{font-family:'Archivo Black',sans-serif; font-size:clamp(1.4rem,5vw,2rem); text-transform:uppercase; text-align:center}
+.sub{color:var(--ink-dim); font-weight:300; font-size:.9rem; text-align:center; max-width:26rem; margin-top:.6rem}
+.cards{width:min(100%,30rem); margin-top:1.6rem; display:grid; gap:1rem}
+.qcard{
+  background:#fff; color:#181302; border-radius:16px; padding:1.4rem;
+  text-align:center; break-inside:avoid;
+}
+.qcard h2{font-family:'Archivo Black',sans-serif; font-size:1.05rem; text-transform:uppercase}
+.qcard .date{color:#7c2d3e; font-weight:600; font-size:.85rem; letter-spacing:.05em}
+.qcard canvas,.qcard img{margin:.8rem auto; display:block}
+.qcard p{font-size:.8rem; color:#555; font-weight:400}
+.qcard .print{margin-top:.6rem}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  background:var(--gold); color:#181302; font-weight:600; font-size:.85rem;
+  padding:.55rem 1.3rem; border-radius:999px; border:none; cursor:pointer;
+}
+.note{color:var(--ink-dim); font-size:.8rem; font-weight:300; text-align:center; margin-top:1.6rem; max-width:26rem}
+@media print{
+  body{background:#fff; padding:0}
+  .logo,.sub,h1,.note,.no-print{display:none !important}
+  .cards{gap:0}
+  .qcard{page-break-after:always; border-radius:0}
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="no-print"><img class="logo" src="assets/logo.webp" alt="Fountain City Players"></a>
+<h1>Event QR Codes</h1>
+<p class="sub">One code per show — print it or screenshot it for the gig table. Guests scan to add their photos, no account needed. New calendar dates appear here automatically the day after they get a Drive folder.</p>
+
+<div class="cards" id="cards"><p style="color:var(--ink-dim)">Loading events…</p></div>
+<p class="note">Tip: use your browser's Print for a clean one-QR-per-page handout. Codes never expire — they're tied to the event, not the date printed.</p>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+const FEED = 'https://n8n.srv1093570.hstgr.cloud/webhook/fcp-community-photos';
+const cards = document.getElementById('cards');
+
+fetch(FEED).then(r => r.json()).then(feed => {
+  const events = feed.events || [];
+  if (!events.length){ cards.innerHTML = '<p style="color:var(--ink-dim)">No events found.</p>'; return; }
+  cards.innerHTML = '';
+  events.forEach(e => {
+    const m = e.folder.match(/^(\d{4}-\d{2}-\d{2})\s*(.*)$/) || [null, '', e.folder];
+    const url = 'https://fountaincityplayers.com/upload.html?e=' + e.folderId;
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    const h = document.createElement('h2'); h.textContent = m[2] || e.folder;
+    const d = document.createElement('div'); d.className = 'date'; d.textContent = m[1];
+    const qbox = document.createElement('div');
+    qbox.style.cssText = 'width:260px;margin:.8rem auto;display:flex;justify-content:center';
+    const cap = document.createElement('p'); cap.textContent = 'Scan to share your photos from tonight';
+    card.append(h, d, qbox, cap);
+    cards.appendChild(card);
+    new QRCode(qbox, { text: url, width: 260, height: 260, colorDark: '#0b0a10', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  });
+  const pr = document.createElement('button');
+  pr.className = 'btn print no-print'; pr.textContent = 'Print all';
+  pr.addEventListener('click', () => print());
+  cards.appendChild(pr);
+}).catch(() => cards.innerHTML = '<p style="color:var(--ink-dim)">Could not load events — try again in a minute.</p>');
+</script>
+</body>
+</html>
